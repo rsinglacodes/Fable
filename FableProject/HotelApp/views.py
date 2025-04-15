@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from HotelApp.models import Hotel
 
 def Hotel_view(request):
@@ -11,6 +11,20 @@ def Hotel_view(request):
         
     return render(request, "amazing.html", context={
         'hotel_list': hotel_list,
-        'categories': Hotel.CATEGORIES,  
+        'categories': Hotel.CATEGORIES,
         'selected_category': category
     })
+
+
+
+def rooms_detail(request, hotel_name):
+    # Get the hotel object from your database using the hotel_name
+    room = get_object_or_404(Hotel, hotel_name=hotel_name)
+    
+    context = {
+        'room': room,
+        'rating': 4.8,  # You might want to make this dynamic based on actual reviews
+        'review_count': 42,  # Same here
+    }
+    
+    return render(request, 'rooms.html', context)

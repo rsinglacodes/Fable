@@ -120,7 +120,7 @@
             animation: slideIn 0.3s ease-out;
         }
 
-        
+
 
         .alert-success {
             color: #0f5132;
@@ -169,7 +169,7 @@
             opacity: 0.75;
         }
 
-        
+
 
 
 
@@ -229,6 +229,39 @@
                 font-size: 2rem;
             }
         }
+
+
+        .category-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .category-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--primary-teal);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .category-dropdown:hover .category-dropdown-content {
+            display: block;
+        }
+
+        .category-dropdown-content a {
+            color: var(--text-light);
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .category-dropdown-content a:hover {
+            background-color: var(--accent-teal);
+        }
     </style>
 </head>
 
@@ -240,6 +273,14 @@
                 <nav>
                     <ul>
                         <li><a href="{% url 'hotel_list' %}">Home</a></li>
+                        <li class="category-dropdown">
+                            <a href="#">Categories <i class="fas fa-chevron-down"></i></a>
+                            <div class="category-dropdown-content">
+                                {% for cat_value, cat_name in Hotel.CATEGORIES %}
+                                <a href="{% url 'hotel_list' %}?category={{ cat_value }}">{{ cat_name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
                         <li><a href="{% url 'feedback' %}">Feedback</a></li>
                         <li><a href="{% url 'view_profile' %}" class="active">Profile</a></li>
                         <li><a href="{% url 'about' %}">About Us</a></li>
@@ -250,8 +291,6 @@
         </div>
     </header>
     <main>
-    
-
         {% block main_block %}
         {% endblock %}
     </main>
