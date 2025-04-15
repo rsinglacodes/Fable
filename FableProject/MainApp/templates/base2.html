@@ -239,9 +239,9 @@
                 <div class="logo">Fable</div>
                 <nav>
                     <ul>
-                        <li><a href="{% url 'amazing' %}">Home</a></li>
+                        <li><a href="{% url 'hotel_list' %}">Home</a></li>
                         <li><a href="{% url 'feedback' %}">Feedback</a></li>
-                        <li><a href="{% url 'profile' %}" class="active">Profile</a></li>
+                        <li><a href="{% url 'view_profile' %}" class="active">Profile</a></li>
                         <li><a href="{% url 'about' %}">About Us</a></li>
                         <li><a href="{% url 'contact' %}">Contact</a></li>
                     </ul>
@@ -250,18 +250,7 @@
         </div>
     </header>
     <main>
-        {% for category,messages in get_flashed_messages(with_categories=True) %}
-
-
-        <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
-            {{messages}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-
-
-
-        {% endfor %}
+    
 
         {% block main_block %}
         {% endblock %}

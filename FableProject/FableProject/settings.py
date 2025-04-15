@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'MainApp',
     'AuthApp',
+    'HotelApp',
+    "django_seed",
 ]
 
 MIDDLEWARE = [
@@ -121,8 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# If your static files are in a folder named "static" at the root of your project:
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -133,3 +134,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'AuthApp.AppUser'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

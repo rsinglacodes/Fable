@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import AppUser
+
+
 class AppUserAdmin(UserAdmin):
     model = AppUser
     list_display = ('email', 'name', 'is_staff', 'is_superuser', 'gender', 'age', 'phone')

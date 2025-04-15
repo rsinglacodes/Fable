@@ -25,8 +25,8 @@ def feedback(request):
 def about(request):
     return render(request, 'about.html')
 
-def amazing(request):
-    return render(request, 'amazing.html')
+# def amazing(request):
+#     return render(request, 'amazing.html')
 
 def beach(request):
     return render(request, 'beach.html')
@@ -42,9 +42,6 @@ def contact(request):
 
 def data(request):
     return render(request, 'data.html')
-
-def edit_profile(request):
-    return render(request, 'edit_profile.html')
 
 def homepage(request):
     return render(request, 'homepage.html')

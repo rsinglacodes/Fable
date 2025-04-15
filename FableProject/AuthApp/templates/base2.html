@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fable</title>
+    <link rel="icon" type="image/x-icon" href="../static/logo_leaf.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap">
+
+    {% block content %}
+    {% endblock %}
+    <style>
+        :root {
+            --primary-teal: #1a4d4d;
+            --light-teal: #e6eded;
+            --dark-teal: #0d2626;
+            --accent-teal: #2c7a7a;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-teal);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-bottom: 0;
+        }
+
+        nav ul li {
+            margin-left: 1.8rem;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition-smooth);
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--light-teal);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: var(--transition-smooth);
+        }
+
+        nav ul li a:hover {
+            color: var(--light-teal);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 0.375rem;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        
+
+        .alert-success {
+            color: #0f5132;
+            background-color: #d1e7dd;
+            border-color: #badbcc;
+        }
+
+        .alert-danger {
+            color: #842029;
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+        }
+
+        .alert-warning {
+            color: #664d03;
+            background-color: #fff3cd;
+            border-color: #ffecb5;
+        }
+
+        .alert-info {
+            color: #055160;
+            background-color: #cff4fc;
+            border-color: #b6effb;
+        }
+
+        .alert-dismissible {
+            padding-right: 3rem;
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 1.25rem 1rem;
+            background: transparent;
+            border: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1;
+            color: inherit;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        .btn-close:hover {
+            opacity: 0.75;
+        }
+
+        
+
+
+
+        footer {
+            background-color: var(--dark-teal);
+            color: var(--text-light);
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--light-teal);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--text-light);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Fable</div>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'amazing' %}">Home</a></li>
+                        <li><a href="{% url 'feedback' %}">Feedback</a></li>
+                        <li><a href="{% url 'profile' %}" class="active">Profile</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% for category,messages in get_flashed_messages(with_categories=True) %}
+
+
+        <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            {{messages}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+
+
+
+        {% endfor %}
+
+        {% block main_block %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Fable Hotels</h3>
+                    <p>Luxury accommodations with a commitment to sustainable hospitality and unforgettable experiences.
+                    </p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Rooms & Suites</a></li>
+                        <li><a href="#">Dining</a></li>
+                        <li><a href="#">Wellness & Spa</a></li>
+                        <li><a href="#">Events</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'term' %}">Terms & Conditions</a></li>
+                        <li><a href="{% url 'term' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'help' %}">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to receive special offers and updates</p>
+                    <form action="#" method="POST">
+                        <input type="email" placeholder="Your email address" required style="margin-bottom: 0.5rem;">
+                        <button type="submit" class="submit-btn" style="width: 100%;">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 Fable Hotels. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

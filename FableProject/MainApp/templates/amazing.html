@@ -2,158 +2,186 @@
 
 {% block content %}
 <style>
-    .category.active {
-        background-color: var(--secondary-color);
-        opacity: 1;
-    }
-
     .hotel-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 2rem;
         padding: 2rem;
     }
-
+    @media (max-width: 1200px) {
+        .hotel-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+        .hotel-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+        .hotel-grid { grid-template-columns: 1fr; }
+    }
     .hotel-card {
-        border: 1px solid #ddd;
-        border-radius: 12px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s, box-shadow 0.2s;
     }
-
     .hotel-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
-
     .hotel-image-container {
-        position: relative;
         width: 100%;
         height: 200px;
+        background: #f5f5f5;
+        position: relative;
         overflow: hidden;
     }
-
-    .hotel-image {
+    .hotel-image-container img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
     }
-
-    .favorite-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: rgba(255, 255, 255, 0.8);
-        border: none;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-    .favorite-button.active i {
-        color: #ff385c;
-    }
-
-    .favorite-button:hover {
-        background: rgba(255, 255, 255, 1);
-    }
-
     .hotel-content {
-        padding: 1rem;
-    }
-
-    .hotel-info {
+        padding: 1.2rem;
+        flex: 1;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center;
+    }
+    .hotel-name {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #222;
+    }
+    .hotel-location {
+        font-size: 1rem;
+        color: #666;
         margin-bottom: 0.5rem;
     }
-
-    .hotel-location {
+    .hotel-guests {
+        font-size: 0.95rem;
+        color: #888;
+        margin-bottom: 0.5rem;
+    }
+    .hotel-price {
         font-size: 1.1rem;
         font-weight: 600;
-        color: #333;
-    }
-
-    .hotel-rating {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-        color: #666;
-    }
-
-    .hotel-rating i {
         color: #ff385c;
-    }
-
-    .hotel-distance {
-        font-size: 0.9rem;
-        color: #666;
         margin-bottom: 0.5rem;
     }
-
-    .hotel-dates {
+    .hotel-category {
         font-size: 0.9rem;
-        color: #666;
+        color: #555;
+        background: #f0f0f0;
+        padding: 4px 8px;
+        border-radius: 12px;
+        display: inline-block;
         margin-bottom: 0.5rem;
     }
-
-    .hotel-price {
+    .hotel-availability {
+        font-size: 0.95rem;
+        color: #2ecc71;
+        margin-bottom: 0.5rem;
+    }
+    .hotel-images-thumbs {
+        display: flex;
+        gap: 4px;
+        margin-top: 8px;
+    }
+    .hotel-images-thumbs img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #eee;
+        cursor: pointer;
+        transition: border 0.2s;
+    }
+    .hotel-images-thumbs img:hover {
+        border: 2px solid #ff385c;
+    }
+    .no-hotels {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: #888;
         font-size: 1.2rem;
-        font-weight: 600;
-        color: #333;
+        padding: 2rem;
     }
-
-    .hotel-price span {
-        font-size: 0.9rem;
-        font-weight: normal;
-        color: #666;
+    .category-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 1rem 2rem;
+        background: #f9f9f9;
+        border-bottom: 1px solid #eee;
+    }
+    .category-filter {
+        padding: 8px 16px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .category-filter:hover {
+        background: #f0f0f0;
+    }
+    .category-filter.active {
+        background: #ff385c;
+        color: white;
+        border-color: #ff385c;
     }
 </style>
 {% endblock %}
 
 {% block main_block %}
-<!-- Hotels Grid -->
 <div class="hotel-grid">
-    {% for room_data in rooms %}
-    <!-- Hotel Card -->
-    <a href="{{ url_for('rooms', room_id=room_data.room.id) }}">
-        <div class="hotel-card">
-            <div class="hotel-image-container">
-                <img src="{{ room_data.room.image1 }}" class="hotel-image" alt="{{ room_data.room.hotel_name }}">
-                <button class="favorite-button" onclick="toggleFavorite(event, this)">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-            </div>
-            <div class="hotel-content">
-                <div class="hotel-info">
-                    <p class="hotel-location">{{ room_data.room.location }}</p>
-                    <div class="hotel-rating">
-                        <i class="fa-solid fa-star"></i>
-                        <p>{{ room_data.rating }}</p>
-                        <p>({{ room_data.review_count }})</p>
-                    </div>
-                </div>
-                <p class="hotel-dates">Available</p>
-                <p class="hotel-price">₹{{ room_data.room.price }} <span>nights</span></p>
-            </div>
+    {% for hotel in hotel_list %}
+    <div class="hotel-card">
+        <div class="hotel-image-container">
+            {% if hotel.image1_url %}
+            <img src="{{ hotel.image1_url }}" alt="{{ hotel.hotel_name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No image available">
+            {% endif %}
         </div>
-    </a>
+        <div class="hotel-content">
+            <div>
+                <h3 class="hotel-name">{{ hotel.hotel_name }}</h3>
+                <p class="hotel-location">{{ hotel.location }}</p>
+                <span class="hotel-category">{{ hotel.get_category_display }}</span>
+                <p class="hotel-guests">Guests: {{ hotel.guests }}</p>
+                <p class="hotel-price">₹{{ hotel.price }} / night</p>
+                <p class="hotel-availability">Available</p>
+            </div>
+            {% if hotel.image2_url or hotel.image3_url or hotel.image4_url or hotel.image5_url %}
+            <div class="hotel-images-thumbs">
+                {% if hotel.image1_url %}
+                <img src="{{ hotel.image1_url }}" alt="Thumbnail 1">
+                {% endif %}
+                {% if hotel.image2_url %}
+                <img src="{{ hotel.image2_url }}" alt="Thumbnail 2">
+                {% endif %}
+                {% if hotel.image3_url %}
+                <img src="{{ hotel.image3_url }}" alt="Thumbnail 3">
+                {% endif %}
+                {% if hotel.image4_url %}
+                <img src="{{ hotel.image4_url }}" alt="Thumbnail 4">
+                {% endif %}
+                {% if hotel.image5_url %}
+                <img src="{{ hotel.image5_url }}" alt="Thumbnail 5">
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-hotels">
+        No hotels are currently available.
+    </div>
     {% endfor %}
 </div>
-
-<script>
-    function toggleFavorite(event, button) {
-        event.preventDefault();
-        event.stopPropagation();
-        button.classList.toggle('active');
-    }
-</script>
 {% endblock %}

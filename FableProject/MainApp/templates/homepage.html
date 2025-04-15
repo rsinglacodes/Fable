@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -851,32 +852,23 @@
   <div class="navbar">
     <div class="navbar-logo">
       <a href="#">
-        <img src="../static/logo.png" alt="Fable Hotels Logo" />
+        <img src="{% static 'logo.png' %}" alt="Fable Hotels Logo" />
       </a>
     </div>
 
-    <!-- {% for category,messages in get_flashed_messages(with_categories=True) %}
-
-
-      <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
-          {{messages}}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-  
-      {% endfor %} -->
 
     <div class="navbar-menu">
       <!-- <a href="#" class="become-host">Become a host</a> -->
       <!-- <span class="material-symbols-outlined language-icon">language</span> -->
-      <h3 style="color: #1a4d4d;">Welcome {{current_user.name }}!</h3>
+      <h3 style="color: #1a4d4d;">Welcome {{user.name }}!</h3>
       <div class="profile-menu">
         <i class="fa-solid fa-user profile-icon"></i>
         <div class="dropdown-menu">
-          <a href="{% url 'profile' %}">Profile</a>
+          <a href="{% url 'view_profile' %}">Profile</a>
           <a href="{% url 'data' %}">Dashboard </a>
           <a href="{% url 'logout' %}">Logout</a>
           <a href="{% url 'contact' %}">Contact</a>
-          <a href="{% url'feedback' %}">Feedback</a>
+          <a href="{% url 'feedback' %}">Feedback</a>
         </div>
       </div>
     </div>
@@ -927,75 +919,35 @@
   </section>
 
   <!-- Category bar -->
-  <div class="category-bar">
-    <!-- [Category bar content remains unchanged] -->
-    <a href="{% url 'amazing' %}">
-      <div class="category">
-        <img src="../static/type1.jpeg" alt="Amazing pools" class="hotel-img" />
-        <p class="category-text">
-          Amazing pools
-        </p>
+  <!-- In the category-bar section of homepage.html, replace with: -->
+<div class="category-bar">
+  <a href="{% url 'hotel_list' %}?category=all">
+      <div class="category {% if not selected_category or selected_category == 'all' %}active{% endif %}">
+          <img src="{% static 'type1.jpeg' %}" alt="All" class="hotel-img" />
+          <p class="category-text">All</p>
       </div>
-    </a>
-    <!-- [Rest of categories remain unchanged] -->
-    <a href="{% url 'beach' %}">
-      <div class="category">
-        <img src="../static/type2.jpeg" alt="Beach" class="hotel-img" />
-        <p class="category-text">Beaches</p>
-      </div>
-    </a>
-    <div class="category">
-      <img src="../static/type3.jpeg" alt="Luxury" class="hotel-img" />
-      <p class="category-text"><a href="{% url'luxury' %}">Luxury</a></p>
-    </div>
-    <div class="category">
-      <img src="../static/type4.jpeg" alt="Countryside" class="hotel-img" />
-      <p class="category-text">Countryside</p>
-    </div>
-    <div class="category">
-      <img src="../static/type5.jpeg" alt="Spa & Wellness" class="hotel-img" />
-      <p class="category-text">Spa & Wellness</p>
-    </div>
-    <div class="category">
-      <img src="../static/type6.jpeg" alt="All-Inclusive" class="hotel-img" />
-      <p class="category-text">All-Inclusive</p>
-    </div>
-    <div class="category">
-      <img src="../static/type7.jpeg" alt="Amazing views" class="hotel-img" />
-      <p class="category-text">Amazing views</p>
-    </div>
-    <div class="category">
-      <img src="../static/type8.jpeg" alt="Boutique" class="hotel-img" />
-      <p class="category-text">Boutique</p>
-    </div>
-    <div class="category">
-      <img src="../static/type9.jpeg" alt="Lakefront" class="hotel-img" />
-      <p class="category-text">Lakefront</p>
-    </div>
-    <div class="category">
-      <img src="../static/type10.jpeg" alt="Beachfront" class="hotel-img" />
-      <p class="category-text">Beachfront</p>
-    </div>
-    <div class="category">
-      <img src="../static/type11.jpeg" alt="Design" class="hotel-img" />
-      <p class="category-text">Design</p>
-    </div>
-    <div class="category">
-      <img src="../static/type12.jpeg" alt="Golf" class="hotel-img" />
-      <p class="category-text">Golf</p>
-    </div>
+  </a>
+  
+  {% for cat_value, cat_name in categories %}
+      {% if cat_value != 'all' %}
+      <a href="{% url 'hotel_list' %}?category={{ cat_value }}">
+          <div class="category {% if selected_category == cat_value %}active{% endif %}">
+              <img src="{% static 'type' %}{% cycle '2' '3' '4' '5' '6' '7' '8' '9' '10' '11' '12' %}.jpeg" alt="{{ cat_name }}" class="hotel-img" />
+              <p class="category-text">{{ cat_name }}</p>
+          </div>
+      </a>
+      {% endif %}
+  {% endfor %}
 
-    <div class="category-scroll">
+  <div class="category-scroll">
       <span class="material-symbols-outlined">arrow_circle_right</span>
-    </div>
-
-    <div class="filter-button">
-      <span class="material-symbols-outlined">tune</span>
-      <p class="filter-label">Filters</p>
-    </div>
-
   </div>
 
+  <div class="filter-button">
+      <span class="material-symbols-outlined">tune</span>
+      <p class="filter-label">Filters</p>
+  </div>
+</div>
   <main>{% block main_block %} {% endblock %}</main>
 
   <!-- [Footer remains unchanged] -->

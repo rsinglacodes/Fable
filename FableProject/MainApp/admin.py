@@ -1,23 +1,21 @@
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import AppUser
-class AppUserAdmin(UserAdmin):
-    model = AppUser
-    list_display = ('email', 'name', 'is_staff', 'is_superuser', 'gender', 'address', 'phone')
-    ordering = ('email',)
-    
-    fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('name', 'phone', 'address', 'gender')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff',
-         'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login',)}),
-    )
-    # Fields visible when creating a new user
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'name', 'phone', 'address', 'gender', 'password1', 'password2'),
-        }),
-    )
-admin.site.register(AppUser, AppUserAdmin)
+# from django.contrib import admin
+# from .models import Course, Student
+# class CourseAdmin(admin.ModelAdmin):
+#     list_display = ('course_id', 'cname', 'fee', 'duration')  # Display columns
+# class StudentAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'email', 'gender',
+#                     'qualification', 'enrolled_courses')
+
+
+# #   To display the gender as radio button
+#     radio_fields = {'gender': admin.VERTICAL}
+
+
+#     def enrolled_courses(self, obj):
+#         course_names = []
+#         for course in obj.courses.all():
+#             course_names.append(course.cname)
+#         return ", ".join(course_names)
+# admin.site.register(Course, CourseAdmin)  # Register Course with CourseAdmin
+# # Register Student with StudentAdmin
+# admin.site.register(Student, StudentAdmin)

@@ -46,6 +46,12 @@ class AppUser(AbstractUser):
     # redefine the email to be unique
     email = models.EmailField(unique=True)
 
+    ROLE_CHOICES = (
+    ('user', 'User'),
+    ('admin', 'Admin'),
+    # add more roles as needed
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
 
     # Adding extra field  inside the custom user class
     name = models.CharField(max_length=100)
