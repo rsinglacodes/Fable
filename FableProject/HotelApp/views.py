@@ -17,9 +17,9 @@ def Hotel_view(request):
 
 
 
-def rooms_detail(request, hotel_name):
+def rooms_detail(request, hotel_slug):
     # Get the hotel object from your database using the hotel_name
-    room = get_object_or_404(Hotel, hotel_name=hotel_name)
+    room = get_object_or_404(Hotel, slug=hotel_slug)
     
     context = {
         'room': room,

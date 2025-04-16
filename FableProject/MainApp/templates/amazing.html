@@ -8,30 +8,49 @@
         gap: 2rem;
         padding: 2rem;
     }
+
     .hotel-card {
-        flex: 0 0 calc(25% - 1.5rem); /* 25% width for 4 cards per row, accounting for gap */
+        flex: 0 0 calc(25% - 1.5rem);
+        /* 25% width for 4 cards per row, accounting for gap */
         background: #fff;
         border-radius: 16px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         overflow: hidden;
         display: flex;
         flex-direction: column;
         transition: transform 0.2s, box-shadow 0.2s;
         margin-bottom: 2rem;
     }
+
     @media (max-width: 1200px) {
-        .hotel-card { flex: 0 0 calc(33.333% - 1.33rem); } /* 3 cards per row */
+        .hotel-card {
+            flex: 0 0 calc(33.333% - 1.33rem);
+        }
+
+        /* 3 cards per row */
     }
+
     @media (max-width: 900px) {
-        .hotel-card { flex: 0 0 calc(50% - 1rem); } /* 2 cards per row */
+        .hotel-card {
+            flex: 0 0 calc(50% - 1rem);
+        }
+
+        /* 2 cards per row */
     }
+
     @media (max-width: 600px) {
-        .hotel-card { flex: 0 0 100%; } /* 1 card per row */
+        .hotel-card {
+            flex: 0 0 100%;
+        }
+
+        /* 1 card per row */
     }
+
     .hotel-card:hover {
         transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
+
     .hotel-image-container {
         width: 100%;
         height: 200px;
@@ -42,6 +61,7 @@
         align-items: center;
         justify-content: center;
     }
+
     .hotel-image-container img {
         max-width: 100%;
         max-height: 100%;
@@ -49,6 +69,7 @@
         height: auto;
         display: block;
     }
+
     .hotel-content {
         padding: 1.2rem;
         flex: 1;
@@ -56,28 +77,33 @@
         flex-direction: column;
         justify-content: space-between;
     }
+
     .hotel-name {
         font-size: 1.15rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
         color: #222;
     }
+
     .hotel-location {
         font-size: 1rem;
         color: #666;
         margin-bottom: 0.5rem;
     }
+
     .hotel-guests {
         font-size: 0.95rem;
         color: #888;
         margin-bottom: 0.5rem;
     }
+
     .hotel-price {
         font-size: 1.1rem;
         font-weight: 600;
         color: #ff385c;
         margin-bottom: 0.5rem;
     }
+
     .hotel-category {
         font-size: 0.9rem;
         color: #555;
@@ -87,16 +113,19 @@
         display: inline-block;
         margin-bottom: 0.5rem;
     }
+
     .hotel-availability {
         font-size: 0.95rem;
         color: #2ecc71;
         margin-bottom: 0.5rem;
     }
+
     .hotel-images-thumbs {
         display: flex;
         gap: 4px;
         margin-top: 8px;
     }
+
     .hotel-images-thumbs img {
         width: 40px;
         height: 40px;
@@ -106,9 +135,11 @@
         cursor: pointer;
         transition: border 0.2s;
     }
+
     .hotel-images-thumbs img:hover {
         border: 2px solid #ff385c;
     }
+
     .no-hotels {
         width: 100%;
         text-align: center;
@@ -116,6 +147,7 @@
         font-size: 1.2rem;
         padding: 2rem;
     }
+
     .category-filters {
         display: flex;
         flex-wrap: wrap;
@@ -124,6 +156,7 @@
         background: #f9f9f9;
         border-bottom: 1px solid #eee;
     }
+
     .category-filter {
         padding: 8px 16px;
         background: #fff;
@@ -132,9 +165,11 @@
         cursor: pointer;
         transition: all 0.2s;
     }
+
     .category-filter:hover {
         background: #f0f0f0;
     }
+
     .category-filter.active {
         background: #ff385c;
         color: white;
@@ -147,43 +182,43 @@
 <div class="hotel-grid">
     {% for hotel in hotel_list %}
     <div class="hotel-card">
-        <a href="{% url 'room_detail' hotel.hotel_name %}">
-                                <div class="hotel-image-container">
+        <a href="{% url 'room_detail' hotel.slug %}">{{ hotel.hotel_name }}
+    <div class="hotel-image-container">
+            {% if hotel.image1_url %}
+            <img src="{{ hotel.image1_url }}" alt="{{ hotel.hotel_name }}" style="max-width: 100%; height: auto;">
+            {% else %}
+            <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No image available">
+            {% endif %}
+        </div>
+        <div class="hotel-content">
+            <div>
+                <h3 class="hotel-name">{{ hotel.hotel_name }}</h3>
+                <p class="hotel-location">{{ hotel.location }}</p>
+                <span class="hotel-category">{{ hotel.get_category_display }}</span>
+                <p class="hotel-guests">Guests: {{ hotel.guests }}</p>
+                <p class="hotel-price">₹{{ hotel.price }} / night</p>
+                <p class="hotel-availability">Available</p>
+            </div>
+            {% if hotel.image2_url or hotel.image3_url or hotel.image4_url or hotel.image5_url %}
+            <div class="hotel-images-thumbs">
                 {% if hotel.image1_url %}
-                <img src="{{ hotel.image1_url }}" alt="{{ hotel.hotel_name }}" style="max-width: 100%; height: auto;">
-                {% else %}
-                <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No image available">
+                <img src="{{ hotel.image1_url }}" alt="Thumbnail 1">
+                {% endif %}
+                {% if hotel.image2_url %}
+                <img src="{{ hotel.image2_url }}" alt="Thumbnail 2">
+                {% endif %}
+                {% if hotel.image3_url %}
+                <img src="{{ hotel.image3_url }}" alt="Thumbnail 3">
+                {% endif %}
+                {% if hotel.image4_url %}
+                <img src="{{ hotel.image4_url }}" alt="Thumbnail 4">
+                {% endif %}
+                {% if hotel.image5_url %}
+                <img src="{{ hotel.image5_url }}" alt="Thumbnail 5">
                 {% endif %}
             </div>
-            <div class="hotel-content">
-                <div>
-                    <h3 class="hotel-name">{{ hotel.hotel_name }}</h3>
-                    <p class="hotel-location">{{ hotel.location }}</p>
-                    <span class="hotel-category">{{ hotel.get_category_display }}</span>
-                    <p class="hotel-guests">Guests: {{ hotel.guests }}</p>
-                    <p class="hotel-price">₹{{ hotel.price }} / night</p>
-                    <p class="hotel-availability">Available</p>
-                </div>
-                {% if hotel.image2_url or hotel.image3_url or hotel.image4_url or hotel.image5_url %}
-                <div class="hotel-images-thumbs">
-                    {% if hotel.image1_url %}
-                    <img src="{{ hotel.image1_url }}" alt="Thumbnail 1">
-                    {% endif %}
-                    {% if hotel.image2_url %}
-                    <img src="{{ hotel.image2_url }}" alt="Thumbnail 2">
-                    {% endif %}
-                    {% if hotel.image3_url %}
-                    <img src="{{ hotel.image3_url }}" alt="Thumbnail 3">
-                    {% endif %}
-                    {% if hotel.image4_url %}
-                    <img src="{{ hotel.image4_url }}" alt="Thumbnail 4">
-                    {% endif %}
-                    {% if hotel.image5_url %}
-                    <img src="{{ hotel.image5_url }}" alt="Thumbnail 5">
-                    {% endif %}
-                </div>
-                {% endif %}
-            </div>
+            {% endif %}
+        </div>
         </a>
     </div>
     {% empty %}
