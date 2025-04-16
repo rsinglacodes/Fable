@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Terms and Conditions</title>
     <style>
         :root {
             --primary-teal: #1a4d4d;
@@ -356,33 +356,26 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Rooms & Suites</a></li>
-                        <li><a href="#">Dining</a></li>
-                        <li><a href="#">Wellness & Spa</a></li>
-                        <li><a href="#">Events</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'home' %}">Rooms & Suites</a></li>
+                        <li><a href="{% url 'home' %}">Dining</a></li>
+                        <li><a href="{% url 'home' %}">Wellness & Spa</a></li>
+                        <li><a href="{% url 'home' %}">Events</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
                     <h3>Information</h3>
                     <ul>
-                        <li><a href="#">About Us</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
                         <li><a href="{ % url 'contact' %}">Contact Us</a></li>
                         <li><a href="{% url 'term' %}">Terms & Conditions</a></li>
                         <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="{% url 'help' %}">FAQ</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-column">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe to receive special offers and updates</p>
-                    <form action="#" method="POST">
-                        <input type="email" placeholder="Your email address" required style="margin-bottom: 0.5rem;">
-                        <button type="submit" class="submit-btn" style="width: 100%;">Subscribe</button>
-                    </form>
-                </div>
+                
             </div>
 
             <div class="copyright">
@@ -390,4 +383,3 @@
             </div>
         </div>
     </footer>
- 

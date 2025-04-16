@@ -463,21 +463,24 @@ textarea {
         <p>We value your feedback to improve our services</p>
     </header>
 
-    <form class="feedback-form">
+    <form class="feedback-form" method="POST" action="{% url 'feedback' %}">
+        {% csrf_token %}
+        
         <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" class="form-control" required placeholder="Enter your name">
+            <label for="id_name">Full Name</label>
+            {{ form.name }}
         </div>
 
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" class="form-control" required placeholder="Enter your email">
+            <label for="id_email">Email Address</label>
+            {{ form.email }}
         </div>
 
         <div class="form-group">
-            <label for="booking">Booking Reference</label>
-            <input type="text" id="booking" class="form-control" required placeholder="Enter your booking reference">
+            <label for="id_comment">Your Feedback</label>
+            {{ form.comment }}
         </div>
+
 
         <div class="form-group">
             <label>Overall Rating</label>
@@ -536,61 +539,45 @@ textarea {
         <button type="submit" class="btn-submit">Submit Feedback</button>
     </form>
 
-    <div class="success-message">
-        <h4 class="text-success">Thank you for your valuable feedback!</h4>
-        <p>We appreciate you taking the time to help us improve. Your input matters to us.</p>
-    </div>
-
-<!-- Add the popup HTML -->
-<div class="popup-overlay">
-    <div class="popup-box">
-        <div class="popup-icon">
-            <svg viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-        </div>
-        <h3 class="popup-title">Thank You!</h3>
-        <p class="popup-message">Your feedback has been sent successfully. We appreciate your time and input!</p>
-        <button class="popup-close">Close</button>
-    </div>
-</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.feedback-form');
-    const popup = document.querySelector('.popup-overlay');
-    const popupBox = document.querySelector('.popup-box');
-    const closeButton = document.querySelector('.popup-close');
-
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Here you would typically send the form data to your Flask backend
-        // For now, we'll just show the popup
-        popup.style.display = 'flex';
-        setTimeout(() => {
-            popupBox.classList.add('active');
-        }, 10);
-    });
-
-    closeButton.addEventListener('click', function() {
-        popupBox.classList.remove('active');
-        setTimeout(() => {
-            popup.style.display = 'none';
-            form.reset(); // Optional: reset the form after closing
-        }, 300);
-    });
-
-    // Close popup when clicking outside
-    popup.addEventListener('click', function(e) {
-        if (e.target === popup) {
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('feedback-form');
+        const popup = document.querySelector('.popup-overlay');
+        const popupBox = document.querySelector('.popup-box');
+        const closeButton = document.querySelector('.popup-close');
+    
+        form.addEventListener('submit', function(e) {
+            // Don't prevent the default action - let the form submit to the server
+            // But capture the form data to display the popup
+            
+            // Show the popup
+            popup.style.display = 'flex';
+            setTimeout(() => {
+                popupBox.classList.add('active');
+            }, 10);
+            
+            // Return true to allow the form to submit
+        });
+    
+        closeButton.addEventListener('click', function() {
             popupBox.classList.remove('active');
             setTimeout(() => {
                 popup.style.display = 'none';
-                form.reset(); // Optional: reset the form after closing
             }, 300);
-        }
+        });
+    
+        // Close popup when clicking outside
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                popupBox.classList.remove('active');
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, 300);
+            }
+        });
     });
-});
+
+
 </script>
 {% endblock %}

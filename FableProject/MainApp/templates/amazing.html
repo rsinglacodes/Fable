@@ -179,100 +179,117 @@
     }
 
 
-    .filter-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
+    /* Add these CSS styles to your existing <style> section */
 
-    .filter-modal-content {
-        background-color: white;
-        padding: 2rem;
-        border-radius: 16px;
-        width: 90%;
-        max-width: 500px;
-        max-height: 80vh;
-        overflow-y: auto;
-    }
+/* Update filter modal styling */
+.filter-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
 
-    .filter-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-    }
+.filter-modal-content {
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 800px;
+    padding: 0;
+    overflow: hidden;
+}
 
-    .filter-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
+.filter-form {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
 
-    .close-filter {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
+.filter-section {
+    padding: 0 20px;
+    border-right: 1px solid #e0e0e0;
+    flex: 1;
+}
 
-    .filter-section {
-        margin-bottom: 1.5rem;
-    }
+.filter-section:last-child {
+    border-right: none;
+}
 
-    .filter-section-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-    }
+.filter-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
 
-    .price-range-inputs {
-        display: flex;
-        gap: 1rem;
-        margin-top: 0.5rem;
-    }
+.price-range-inputs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
 
-    .price-input {
-        flex: 1;
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-    }
+.price-input {
+    border: none;
+    font-size: 1rem;
+    width: 100%;
+    padding: 5px 0;
+    outline: none;
+}
 
-    .filter-button-group {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
+.guests-input {
+    border: none;
+    font-size: 1rem;
+    width: 100%;
+    padding: 5px 0;
+    outline: none;
+}
 
-    .apply-filters {
-        background-color: #ff385c;
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-        flex: 1;
-    }
+.search-button {
+    background-color: #2a6159;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 15px;
+}
 
-    .clear-filters {
-        background-color: #f0f0f0;
-        color: #333;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-        flex: 1;
-    }
+.search-button i {
+    font-size: 1.2rem;
+}
+
+.close-filter {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+/* Price divider style */
+.price-divider {
+    color: #ccc;
+    font-weight: normal;
+}
 </style>
 {% endblock %}
 
 {% block main_block %}
+
 
 
 <div class="hotel-grid">
@@ -308,6 +325,48 @@
 </div>
 
 <script>
-    
+        // Get the modal
+        const filterModal = document.getElementById('filterModal');
+        const filterButton = document.getElementById('filterButton');
+        const closeFilter = document.getElementById('closeFilter');
+        const clearFilters = document.getElementById('clearFilters');
+        
+        // Open the modal when the filter button is clicked
+        filterButton.addEventListener('click', function() {
+            filterModal.style.display = 'flex';
+        });
+        
+        // Close the modal when the close button is clicked
+        closeFilter.addEventListener('click', function() {
+            filterModal.style.display = 'none';
+        });
+        
+        // Close the modal when clicking outside of it
+        window.addEventListener('click', function(event) {
+            if (event.target === filterModal) {
+                filterModal.style.display = 'none';
+            }
+        });
+        
+        // Clear filters functionality
+        clearFilters.addEventListener('click', function() {
+            // Get the current URL
+            let url = new URL(window.location.href);
+            
+            // Keep only the category parameter if it exists
+            let params = new URLSearchParams(url.search);
+            let category = params.get('category');
+            
+            // Reset the search parameters
+            params = new URLSearchParams();
+            
+            // Add back the category if it existed
+            if (category) {
+                params.set('category', category);
+            }
+            
+            // Redirect to the cleaned URL
+            window.location.href = `${url.pathname}?${params.toString()}`;
+        });
 </script>
 {% endblock %}

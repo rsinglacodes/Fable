@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 
 <head>
+  {% load static %}
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="../static/logo_leaf.png">
-
 
   <title>Fable</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -18,7 +17,131 @@
 
   {% block Content %} {% endblock %}
   <style>
-    /* [Previous CSS styles remain unchanged up to the navbar-search class] */
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      height: 90px;
+      border-bottom: 1px solid var(--border-color);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--white);
+      z-index: 100;
+      padding: 0 24px;
+    }
+
+    .navbar-logo {
+      justify-self: start;
+    }
+
+    .navbar-logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    .navbar-logo .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .navbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      height: 90px;
+      border-bottom: 1px solid var(--border-color);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--white);
+      z-index: 100;
+      padding: 0 24px;
+    }
+
+    .navbar-search {
+      display: none;
+      /* Hide the original search bar */
+    }
+
+    /* Dropdown Menu Styles */
+    .profile-menu {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      background-color: var(--white);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .profile-menu:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-icon {
+      color: var(--primary-color);
+      font-size: 18px;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 180px;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 8px 0;
+      margin-top: 8px;
+      display: none;
+      z-index: 101;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 16px;
+      color: var(--dark-text);
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+    }
+
+    .dropdown-menu:before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: 20px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--white);
+      transform: rotate(45deg);
+      border-top: 1px solid var(--border-color);
+      border-left: 1px solid var(--border-color);
+    }
+    
     :root {
       --primary-color: #1a4d4d;
       --primary-dark: #0e3333;
@@ -136,87 +259,51 @@
       height: 74px;
       border-radius: 50px;
       background-color: #ffffff;
-      padding-top: 15px;
-      padding-bottom: 20px;
       box-shadow: 2px 2px 6px rgb(56, 56, 56);
+      display: flex;
+      align-items: center;
     }
 
-    /* [Rest of the original CSS remains unchanged] */
-    .search-form {
+    /* Updated filter form styles to match the image */
+    .filter-form {
       display: flex;
       align-items: center;
       width: 100%;
-      gap: 7px;
       padding: 0 8px;
     }
 
-    .form-group {
+    .filter-section {
       flex: 1;
-      position: relative;
-      padding: 8px 13px;
-      border-radius: 32px;
-      transition: all 0.2s ease;
+      padding: 0 20px;
+      border-right: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 54px;
     }
 
-    .form-group:hover {
-      background-color: var(--background-hover);
+    .filter-section:last-child {
+      border-right: none;
     }
 
-    .form-group label {
-      position: absolute;
-      top: 4px;
-      left: 16px;
-      font-size: 12px;
+    .filter-section-title {
+      font-size: 0.75rem;
       font-weight: 600;
-      color: var(--text-primary);
-      transform-origin: left;
-      transition: all 0.2s ease;
+      color: #333;
+      margin-bottom: 5px;
     }
 
-    .search-input {
-      width: 100%;
-      height: 32px;
-      padding: 16px 0 0 0;
+    .price-input, .guests-input {
       border: none;
-      background: none;
-      font-size: 14px;
-      color: var(--text-primary);
-      cursor: pointer;
-    }
-
-    .search-input::placeholder {
-      color: var(--text-secondary);
-    }
-
-    .search-input:focus {
+      font-size: 1rem;
+      width: 100%;
+      padding: 5px 0;
       outline: none;
+      background: transparent;
     }
 
-    /* Modern select styling */
-    select.search-input {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right center;
-      padding-right: 24px;
-    }
-
-    /* Divider between inputs - enhanced */
-    .form-group:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      right: -4px;
-      top: 20%;
-      height: 60%;
-      width: 1px;
-      background-color: var(--border-color);
-    }
-
-    /* Search button styles - modernized */
     .search-button {
-      background-color: var(--primary-color);
+      background-color: #2a6159;
       color: white;
       border: none;
       border-radius: 50%;
@@ -226,132 +313,11 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      margin-right: 8px;
-      box-shadow: 0 2px 8px rgba(26, 77, 77, 0.3);
+      margin-right: 15px;
     }
 
-    .search-button:hover {
-      background-color: var(--primary-dark);
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(26, 77, 77, 0.4);
-    }
-
-    /* Date input styling */
-    input[type="date"] {
-      font-family: inherit;
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      cursor: pointer;
-      opacity: 0.6;
-      transition: 0.2s ease;
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator:hover {
-      opacity: 1;
-    }
-
-    .navbar-menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .become-host {
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      color: var(--dark-text);
-      transition: color 0.2s;
-    }
-
-    .become-host:hover {
-      color: var(--primary-color);
-    }
-
-    .language-icon {
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .language-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .profile-menu {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 5px 5px 5px 12px;
-      gap: 8px;
-      border-radius: 21px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-      height: 42px;
-      border: 1px solid var(--border-color);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background-color: var(--white);
-      position: relative;
-      /* Position relative for dropdown */
-    }
-
-    .profile-menu:hover {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-      transform: translateY(-1px);
-    }
-
-    .profile-icon {
-      background-color: var(--primary-color);
-      color: white;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      text-align: center;
-      line-height: 30px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-right: 8px;
-      /* Add margin to separate from dropdown */
-    }
-
-    /* Dropdown Menu Styles */
-    .dropdown-menu {
-      display: none;
-      /* Hidden by default */
-      position: absolute;
-      /* Position it below the profile menu */
-      right: 0;
-      /* Align to the right */
-      top: 50px;
-      /* Move it down */
-      background-color: var(--white);
-      box-shadow: var(--box-shadow);
-      border-radius: 8px;
-      z-index: 200;
-      /* Ensure it appears above other elements */
-      width: 200px;
-    }
-
-    .profile-menu:hover .dropdown-menu {
-      display: block;
-      /* Show on hover */
-    }
-
-    .dropdown-menu a {
-      display: block;
-      /* Make links block elements */
-      padding: 10px 16px;
-      /* Add some padding */
-      color: var(--dark-text);
-      text-decoration: none;
-      /* Remove underline */
-    }
-
-    .dropdown-menu a:hover {
-      background-color: var(--secondary-color);
-      /* Change background on hover */
+    .search-button i {
+      font-size: 1.2rem;
     }
 
     /* Category Bar Styles */
@@ -370,7 +336,6 @@
       overflow-x: auto;
       border-bottom: 1px solid var(--border-color);
       scrollbar-width: none;
-      /* Firefox */
     }
 
     .category-bar::-webkit-scrollbar {
@@ -445,63 +410,6 @@
     .filter-label {
       font-size: 14px;
       font-weight: 500;
-    }
-
-    /* Price Toggle Bar */
-    .price-toggle {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin-top: 192px;
-      margin-bottom: 24px;
-    }
-
-    .price-toggle-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 12px;
-      padding: 16px;
-      border: 1px solid var(--border-color);
-      width: 600px;
-      height: 64px;
-      background-color: var(--white);
-      box-shadow: var(--box-shadow);
-      transition: all 0.2s ease;
-    }
-
-    .price-toggle-container:hover {
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-      transform: translateY(-1px);
-    }
-
-    .price-toggle-text {
-      width: 460px;
-      display: flex;
-      justify-content: start;
-    }
-
-    .price-label {
-      border-right: 2px solid var(--border-color);
-      padding-right: 16px;
-      font-size: 16px;
-      font-weight: 500;
-    }
-
-    .price-description {
-      font-size: 16px;
-      color: var(--gray-text);
-      padding-left: 16px;
-    }
-
-    .toggle-icon {
-      color: var(--primary-color);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .toggle-icon:hover {
-      transform: scale(1.1);
     }
 
     /* Hotel Grid */
@@ -689,6 +597,13 @@
       transform: translateY(-3px);
     }
 
+    .navbar-menu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 32px;
+    }
+
     .copyright {
       margin-top: 48px;
       text-align: center;
@@ -747,84 +662,39 @@
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       }
 
-      .price-toggle-container {
+      .filter-form {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .filter-section {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 8px 0;
+      }
+
+      .filter-section:last-child {
+        border-bottom: none;
+      }
+
+      .search-bar {
         width: 90%;
         max-width: 600px;
+        height: auto;
+        padding: 16px 0;
+        flex-direction: column;
+      }
+
+      .search-button {
+        margin: 8px 0 0 0;
+        width: 100%;
+        border-radius: 24px;
       }
 
       .footer-content {
         grid-template-columns: 1fr 1fr;
-      }
-    }
-
-
-
-    @keyframes keyframes-svg-filled {
-      0% {
-        transform: scale(0);
-      }
-
-      25% {
-        transform: scale(1.2);
-      }
-
-      50% {
-        transform: scale(1);
-        filter: brightness(1.5);
-      }
-    }
-
-    @keyframes keyframes-svg-celebrate {
-      0% {
-        transform: scale(0);
-      }
-
-      50% {
-        opacity: 1;
-        filter: brightness(1.5);
-      }
-
-      100% {
-        transform: scale(1.4);
-        opacity: 0;
-        display: none;
-      }
-    }
-
-    /* Responsive styles for search bar */
-    @media (max-width: 768px) {
-      .search-bar {
-        width: 100%;
-        flex-direction: column;
-        height: auto;
-        padding: 16px;
-        border-radius: 24px;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .search-form {
-        flex-direction: column;
-        width: 100%;
-        gap: 16px;
-      }
-
-      .form-group {
-        width: 100%;
-        margin-bottom: 8px;
-        border-radius: 16px;
-        padding: 12px 16px;
-      }
-
-      .form-group::after {
-        display: none;
-      }
-
-      .search-button {
-        width: 100%;
-        border-radius: 16px;
-        height: 48px;
-        margin-top: 8px;
       }
     }
 
@@ -848,6 +718,8 @@
   </style>
 </head>
 
+
+
 <body>
   <!-- Navbar -->
   <div class="navbar">
@@ -859,8 +731,6 @@
 
 
     <div class="navbar-menu">
-      <!-- <a href="#" class="become-host">Become a host</a> -->
-      <!-- <span class="material-symbols-outlined language-icon">language</span> -->
       <h3 style="color: #1a4d4d;">Welcome {{user.name }}!</h3>
       <div class="profile-menu">
         <i class="fa-solid fa-user profile-icon"></i>
@@ -875,86 +745,66 @@
     </div>
   </div>
 
-  <!-- Search section (replaces price toggle) -->
+  <!-- Search section with filter modal integrated -->
   <section class="search-section">
     <div class="search-bar">
-      <form class="search-form">
-        <div class="form-group">
-          <label for="destination">Destination/Hotel</label>
-          <input type="text" id="destination" class="search-input" placeholder="Where are you going?" />
+      <form action="{% url 'hotel_list' %}" method="GET" class="filter-form">
+        {% if selected_category %}
+        <input type="hidden" name="category" value="{{ selected_category }}">
+        {% endif %}
+        
+        <div class="filter-section">
+          <div class="filter-section-title">Min price</div>
+          <input type="number" name="min_price" placeholder="₹0" class="price-input" value="{{ min_price }}">
         </div>
-
-        <div class="form-group">
-          <label for="check-in">Check-in</label>
-          <input type="date" id="check-in" class="search-input" />
+        
+        <div class="filter-section">
+          <div class="filter-section-title">Max price</div>
+          <input type="number" name="max_price" placeholder="₹50000" class="price-input" value="{{ max_price }}">
         </div>
-
-        <div class="form-group">
-          <label for="check-out">Check-out</label>
-          <input type="date" id="check-out" class="search-input" />
+        
+        <div class="filter-section">
+          <div class="filter-section-title">Guests</div>
+          <input type="number" name="guests" placeholder="1 Adult" class="guests-input" value="{{ guests_filter }}" min="1">
         </div>
-
-        <div class="form-group">
-          <label for="guests">Guests</label>
-          <select id="guests" class="search-input">
-            <option>1 Adult</option>
-            <option>2 Adults</option>
-            <option>2 Adults, 1 Child</option>
-            <option>2 Adults, 2 Children</option>
-          </select>
-        </div>
-
+        
         <button type="submit" class="search-button">
-
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-
+          <i class="fas fa-search"></i>
         </button>
-
-
       </form>
     </div>
   </section>
-
   <!-- Category bar -->
-  <!-- In the category-bar section of homepage.html, replace with: -->
-<div class="category-bar">
-  <a href="{% url 'hotel_list' %}?category=all">
-      <div class="category {% if not selected_category or selected_category == 'all' %}active{% endif %}">
-          <img src="{% static 'type1.jpeg' %}" alt="All" class="hotel-img" />
-          <p class="category-text">All</p>
-      </div>
-  </a>
-  
-  {% for cat_value, cat_name in categories %}
-      {% if cat_value != 'all' %}
-      <a href="{% url 'hotel_list' %}?category={{ cat_value }}">
-          <div class="category {% if selected_category == cat_value %}active{% endif %}">
-              <img src="{% static 'type' %}{% cycle '2' '3' '4' '5' '6' '7' '8' '9' '10' '11' '12' %}.jpeg" alt="{{ cat_name }}" class="hotel-img" />
-              <p class="category-text">{{ cat_name }}</p>
-          </div>
-      </a>
-      {% endif %}
-  {% endfor %}
+  <div class="category-bar">
+    <a href="{% url 'hotel_list' %}?category=all">
+        <div class="category {% if not selected_category or selected_category == 'all' %}active{% endif %}">
+            <img src="{% static 'type1.jpeg' %}" alt="All" class="hotel-img" />
+            <p class="category-text">All</p>
+        </div>
+    </a>
+    
+    {% for cat_value, cat_name in categories %}
+        {% if cat_value != 'all' %}
+        <a href="{% url 'hotel_list' %}?category={{ cat_value }}">
+            <div class="category {% if selected_category == cat_value %}active{% endif %}">
+                <img src="{% static 'type' %}{% cycle '2' '3' '4' '5' '6' '7' '8' '9' '10' '11' '12' %}.jpeg" alt="{{ cat_name }}" class="hotel-img" />
+                <p class="category-text">{{ cat_name }}</p>
+            </div>
+        </a>
+        {% endif %}
+    {% endfor %}
 
 
-  <div class="filter-button" id="filterButton">
-    <span class="material-symbols-outlined">tune</span>
-    <p class="filter-label">Filters</p>
-</div>
-</div>
+    
+  </div>
   <main>{% block main_block %} {% endblock %}</main>
 
-  <!-- [Footer remains unchanged] -->
+  <!-- Footer -->
   <footer>
-    <!-- [Footer content remains unchanged] -->
     <div class="container">
       <div class="footer-content">
         <div class="footer-column">
-          <h3>GreenStay Hotels</h3>
+          <h3>Fable Hotels</h3>
           <p>
             Luxury accommodations with a commitment to sustainable hospitality
             and unforgettable experiences.
@@ -964,7 +814,6 @@
         <div class="footer-column">
           <h3>Quick Links</h3>
           <ul>
-
             <li><a href="{% url 'home' %}">Rooms & Suites</a></li>
             <li><a href="{% url 'home' %}">Dining</a></li>
             <li><a href="{% url 'home' %}">Wellness & Spa</a></li>
@@ -980,27 +829,15 @@
           </ul>
         </div>
 
-        <div class="footer-column">
-          <h3>Newsletter</h3>
-          <p>Subscribe to receive special offers and updates</p>
-          <form action="#" method="POST">
-            <input type="email" placeholder="Your email address" required style="margin-bottom: 0.5rem" />
-            <button type="submit" class="submit-btn" style="width: 100%">
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
+    
 
       <div class="copyright">
-        <p>&copy; 2025 GreenStay Hotels. All Rights Reserved.</p>
+        <p>&copy; 2025 Fable Hotels. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- [JavaScript remains unchanged] -->
   <script>
-    // [Previous JavaScript code remains unchanged]
     // JavaScript to toggle dropdown menu
     document
       .querySelector(".profile-menu")
@@ -1026,13 +863,18 @@
         category.classList.add("active");
       });
       category.addEventListener("mouseleave", () => {
-        category.classList.remove("active");
+        if (!category.classList.contains("selected")) {
+          category.classList.remove("active");
+        }
       });
     });
 
+    // Keep the filter button functionality
     document.getElementById('filterButton').addEventListener('click', function() {
-      // This will be handled by the amazing.html script
-  });
+      // Since we integrated the filter directly into the search bar, 
+      // this could now be used for additional filtering options or just focus on the search
+      document.querySelector('.price-input').focus();
+    });
   </script>
 </body>
 

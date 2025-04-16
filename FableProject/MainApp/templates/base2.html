@@ -68,10 +68,7 @@
             transition: var(--transition-smooth);
         }
 
-        .logo:hover {
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            transform: scale(1.05);
-        }
+        
 
         nav ul {
             display: flex;
@@ -301,10 +298,10 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Rooms & Suites</a></li>
-                        <li><a href="#">Dining</a></li>
-                        <li><a href="#">Wellness & Spa</a></li>
-                        <li><a href="#">Events</a></li>
+                        <li><a href="{% url 'home' %}">Rooms & Suites</a></li>
+                        <li><a href="{% url 'home' %}">Dining</a></li>
+                        <li><a href="{% url 'home' %}">Wellness & Spa</a></li>
+                        <li><a href="{% url 'home' %}">Events</a></li>
                     </ul>
                 </div>
 
@@ -318,14 +315,7 @@
                     </ul>
                 </div>
 
-                <div class="footer-column">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe to receive special offers and updates</p>
-                    <form action="#" method="POST">
-                        <input type="email" placeholder="Your email address" required style="margin-bottom: 0.5rem;">
-                        <button type="submit" class="submit-btn" style="width: 100%;">Subscribe</button>
-                    </form>
-                </div>
+                
             </div>
 
             <div class="copyright">

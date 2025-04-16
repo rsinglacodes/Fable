@@ -214,7 +214,7 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      background-image: url("../static/logo_leaf.png");
+      background-image: url("{% static 'logo_leaf.png' %}");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -517,7 +517,7 @@
       position: absolute;
       width: 30px;
       height: 30px;
-      background: url("../static/leaf.png") no-repeat center/cover;
+      background: url("{% static 'logo_leaf.png' %}") no-repeat center/cover;
       animation: blow 10s linear infinite;
       z-index: -1;
       /* Send leaves to the background */
@@ -658,7 +658,7 @@
               <label for="password">Password</label>
               <i class="fas fa-lock"></i>
               <input type="password" name="password" id="password" class="form-control" placeholder="Create a password"
-                pattern="^(?=.*\d)(?=.*[a-zA-Z]).{8,}$"
+                pattern="^(?=.\d)(?=.[a-zA-Z]).{8,}$"
                 title="Must contain at least one number, one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long"
                 required />
               <ul class="password-requirements">
@@ -731,14 +731,7 @@
           </ul>
         </div>
 
-        <div class="footer-column">
-          <h3>Newsletter</h3>
-          <p>Subscribe to receive special offers and updates</p>
-          <form action="#" method="POST">
-            <input type="email" placeholder="Your email address" required />
-            <button type="submit" class="submit-btn">Subscribe</button>
-          </form>
-        </div>
+        
       </div>
 
       <div class="copyright">
