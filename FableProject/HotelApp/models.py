@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
+from django.conf import settings
+from AuthApp.models import AppUser
 
 class Hotel(models.Model):
     CATEGORIES = [
@@ -50,3 +52,20 @@ class Hotel(models.Model):
                 counter += 1
             self.slug = slug
         super().save(*args, **kwargs)
+
+
+
+class Booking(models.Model):
+    hotel_name = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Add this line
+    check_in = models.DateField()
+    check_out = models.DateField()
+    guests = models.IntegerField()
+    total_price = models.FloatField(default=0.0)  # Add this field to store the calculated price
+    
+    def __str__(self):
+        return f"{self.user.email} - {self.hotel_name.hotel_name} ({self.check_in} to {self.check_out})"
+    
+    def calculate_total_price(self):
+        nights = (self.check_out - self.check_in).days
+        return self.hotel_name.price * nights

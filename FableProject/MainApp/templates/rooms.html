@@ -335,25 +335,29 @@
         <div class="booking-card">
             <div class="price">₹{{ room.price }} <span style="font-weight: normal; font-size: 1rem;">night</span></div>
 
-            <div class="date-picker">
-                <input type="date" id="check-in-date" class="date-input">
-                <input type="date" id="check-out-date" class="date-input">
-                <select id="guests" class="date-input" style="grid-column: span 2;">
-                    {% for i in "123456"|make_list %}
-                        {% if forloop.counter <= room.guests %}
-                            <option value="{{ forloop.counter }}">{{ forloop.counter }} guest{% if forloop.counter > 1 %}s{% endif %}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
+            <form action="{% url 'confirm_booking' %}" method="GET">
+            <input type="hidden" name="room_id" value="{{ room.hotel_name }}">
+                
+                <div class="date-picker">
+                    <input type="date" id="check-in-date" name="check_in" class="date-input" required>
+                    <input type="date" id="check-out-date" name="check_out" class="date-input" required>
+                    <select id="guests" name="guests" class="date-input" style="grid-column: span 2;">
+                        {% for i in "123456"|make_list %}
+                            {% if forloop.counter <= room.guests %}
+                                <option value="{{ forloop.counter }}">{{ forloop.counter }} guest{% if forloop.counter > 1 %}s{% endif %}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
 
-            <button class="reserve-button" onclick="redirectToConfirm()">Reserve</button>
-            <p style="text-align: center; margin: 1rem 0; color: #666;">You won't be charged yet</p>
+                <button type="submit" class="reserve-button">Reserve</button>
+                <p style="text-align: center; margin: 1rem 0; color: #666;">You won't be charged yet</p>
+            </form>
 
             <div class="price-breakdown">
                 <div class="price-row">
-                    <span>₹{{ room.price }} x 5 nights</span>
-                    <span>₹{{ room.price|floatformat:2 }}</span>
+                    <span id="nights-display">₹{{ room.price }} x 5 nights</span>
+                    <span id="subtotal-display">₹{{ room.price|floatformat:2 }}</span>
                 </div>
                 <div class="price-row" style="font-weight: bold; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
                     <span>Total before taxes</span>
@@ -373,14 +377,6 @@
 </main>
 
 <script>
-    function redirectToConfirm() {
-        const checkInDate = document.getElementById('check-in-date').value;
-        const checkOutDate = document.getElementById('check-out-date').value;
-        const guests = document.getElementById('guests').value;
-        
-        window.location.href = `/confirm/?room_id={{ room.hotel_name|urlencode }}&check_in=${checkInDate}&check_out=${checkOutDate}&guests=${guests}`;
-    }
-
     function toggleFavorite(button) {
         button.classList.toggle('active');
         // You can add AJAX here to save favorite status
@@ -396,22 +392,26 @@
     document.getElementById('check-in-date').valueAsDate = tomorrow;
     document.getElementById('check-out-date').valueAsDate = nextWeek;
     
-    // Calculate and update price based on selected dates
+    // Calculate and update price display based on selected dates
     function updatePrice() {
         const checkIn = new Date(document.getElementById('check-in-date').value);
         const checkOut = new Date(document.getElementById('check-out-date').value);
         const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-        const pricePerNight = {{ room.price }};
+        const pricePerNight = parseFloat("{{ room.price }}");
         const totalPrice = nights * pricePerNight;
         
-        document.querySelector('.price-breakdown .price-row:nth-child(1) span:first-child').textContent = 
+        document.getElementById('nights-display').textContent = 
             `₹${pricePerNight} x ${nights} night${nights > 1 ? 's' : ''}`;
-        document.querySelector('.price-breakdown .price-row:nth-child(1) span:last-child').textContent = 
+        document.getElementById('subtotal-display').textContent = 
             `₹${totalPrice.toFixed(2)}`;
         document.getElementById('total-price').textContent = `₹${totalPrice.toFixed(2)}`;
     }
     
     document.getElementById('check-in-date').addEventListener('change', updatePrice);
     document.getElementById('check-out-date').addEventListener('change', updatePrice);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updatePrice();
+    });
 </script>
 {% endblock %}

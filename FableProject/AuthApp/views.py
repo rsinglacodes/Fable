@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from .models import AppUser
 from .forms import EditProfileForm
 from django.contrib.auth import logout
+from HotelApp.models import Booking  
 
 def home_view(request):
     return render(request, 'index.html')
@@ -78,6 +79,7 @@ def login_view(request):
 
 
 
+
 @login_required
 def logout_view(request):
     logout(request)
@@ -85,7 +87,12 @@ def logout_view(request):
 
 @login_required
 def view_profile(request):
-    return render(request, 'profile.html', {'user': request.user})
+    # Get the user's booking history
+    bookings = Booking.objects.filter(user=request.user).order_by('-check_in')
+    return render(request, 'profile.html', {
+        'user': request.user,
+        'bookings': bookings  # Pass bookings to template
+    })
 
 @login_required
 def edit_profile(request):

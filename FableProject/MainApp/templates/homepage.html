@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="../static/logo_leaf.png">
 
+
   <title>Fable</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -851,7 +852,7 @@
   <!-- Navbar -->
   <div class="navbar">
     <div class="navbar-logo">
-      <a href="#">
+      <a href="{% url 'home' %}">
         <img src="{% static 'logo.png' %}" alt="Fable Hotels Logo" />
       </a>
     </div>
@@ -865,7 +866,7 @@
         <i class="fa-solid fa-user profile-icon"></i>
         <div class="dropdown-menu">
           <a href="{% url 'view_profile' %}">Profile</a>
-          <a href="{% url 'data' %}">Dashboard </a>
+          <!-- <a href="{% url 'data' %}">Dashboard </a> -->
           <a href="{% url 'logout' %}">Logout</a>
           <a href="{% url 'contact' %}">Contact</a>
           <a href="{% url 'feedback' %}">Feedback</a>
@@ -939,14 +940,11 @@
       {% endif %}
   {% endfor %}
 
-  <div class="category-scroll">
-      <span class="material-symbols-outlined">arrow_circle_right</span>
-  </div>
 
-  <div class="filter-button">
-      <span class="material-symbols-outlined">tune</span>
-      <p class="filter-label">Filters</p>
-  </div>
+  <div class="filter-button" id="filterButton">
+    <span class="material-symbols-outlined">tune</span>
+    <p class="filter-label">Filters</p>
+</div>
 </div>
   <main>{% block main_block %} {% endblock %}</main>
 
@@ -967,10 +965,10 @@
           <h3>Quick Links</h3>
           <ul>
 
-            <li><a href="#">Rooms & Suites</a></li>
-            <li><a href="#">Dining</a></li>
-            <li><a href="#">Wellness & Spa</a></li>
-            <li><a href="#">Events</a></li>
+            <li><a href="{% url 'home' %}">Rooms & Suites</a></li>
+            <li><a href="{% url 'home' %}">Dining</a></li>
+            <li><a href="{% url 'home' %}">Wellness & Spa</a></li>
+            <li><a href="{% url 'home' %}">Events</a></li>
           </ul>
         </div>
         <div class="footer-column">
@@ -1031,6 +1029,10 @@
         category.classList.remove("active");
       });
     });
+
+    document.getElementById('filterButton').addEventListener('click', function() {
+      // This will be handled by the amazing.html script
+  });
   </script>
 </body>
 

@@ -12,6 +12,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap">
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     {% block content %}
     {% endblock %}
     <style>
@@ -269,18 +270,11 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">Fable</div>
+                <a href="{% url 'home' %}" style="text-decoration: none; color: white"><div class="logo">Fable</div></a>
                 <nav>
                     <ul>
                         <li><a href="{% url 'hotel_list' %}">Home</a></li>
-                        <li class="category-dropdown">
-                            <a href="#">Categories <i class="fas fa-chevron-down"></i></a>
-                            <div class="category-dropdown-content">
-                                {% for cat_value, cat_name in Hotel.CATEGORIES %}
-                                <a href="{% url 'hotel_list' %}?category={{ cat_value }}">{{ cat_name }}</a>
-                                {% endfor %}
-                            </div>
-                        </li>
+                       
                         <li><a href="{% url 'feedback' %}">Feedback</a></li>
                         <li><a href="{% url 'view_profile' %}" class="active">Profile</a></li>
                         <li><a href="{% url 'about' %}">About Us</a></li>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'AuthApp',
     'HotelApp',
     "django_seed",
+    
 ]
 
 MIDDLEWARE = [

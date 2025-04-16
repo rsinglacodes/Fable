@@ -23,12 +23,13 @@ urlpatterns = [
     path('learn/',views.learn,name='learn'),
     path('rooms/',views.rooms,name='rooms'),
     path('search/',views.search,name='search'),
-    path('feedback/',views.help,name='feedback'),
+    path('feedback/',views.feedback_view,name='feedback'),
     path('AuthApp/login/',v1.login_view,name='login'),
     path('AuthApp/register/',v1.register_view,name='register'),
     path('AuthApp/logout/', v1.logout_view, name='logout'),
     path('AuthApp/profile/', v1.view_profile, name='view_profile'),
-    
+    path('thanks/', views.thanks, name='thanks'),
+
 
 ]
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

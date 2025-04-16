@@ -1,6 +1,8 @@
 {% extends 'homepage.html' %}
 
 {% block content %}
+<link rel="icon" type="image/x-icon" href="../static/logo_leaf.png">
+
 <style>
     .hotel-grid {
         display: flex;
@@ -175,14 +177,108 @@
         color: white;
         border-color: #ff385c;
     }
+
+
+    .filter-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .filter-modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .filter-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .close-filter {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .filter-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-section-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    .price-range-inputs {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .price-input {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .filter-button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .apply-filters {
+        background-color: #ff385c;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    .clear-filters {
+        background-color: #f0f0f0;
+        color: #333;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        flex: 1;
+    }
 </style>
 {% endblock %}
 
 {% block main_block %}
+
+
 <div class="hotel-grid">
     {% for hotel in hotel_list %}
     <div class="hotel-card">
-        <a href="{% url 'room_detail' hotel.slug %}">{{ hotel.hotel_name }}
+        <a href="{% url 'room_detail' hotel.slug %}">
     <div class="hotel-image-container">
             {% if hotel.image1_url %}
             <img src="{{ hotel.image1_url }}" alt="{{ hotel.hotel_name }}" style="max-width: 100%; height: auto;">
@@ -195,28 +291,11 @@
                 <h3 class="hotel-name">{{ hotel.hotel_name }}</h3>
                 <p class="hotel-location">{{ hotel.location }}</p>
                 <span class="hotel-category">{{ hotel.get_category_display }}</span>
-                <p class="hotel-guests">Guests: {{ hotel.guests }}</p>
                 <p class="hotel-price">₹{{ hotel.price }} / night</p>
                 <p class="hotel-availability">Available</p>
             </div>
             {% if hotel.image2_url or hotel.image3_url or hotel.image4_url or hotel.image5_url %}
-            <div class="hotel-images-thumbs">
-                {% if hotel.image1_url %}
-                <img src="{{ hotel.image1_url }}" alt="Thumbnail 1">
-                {% endif %}
-                {% if hotel.image2_url %}
-                <img src="{{ hotel.image2_url }}" alt="Thumbnail 2">
-                {% endif %}
-                {% if hotel.image3_url %}
-                <img src="{{ hotel.image3_url }}" alt="Thumbnail 3">
-                {% endif %}
-                {% if hotel.image4_url %}
-                <img src="{{ hotel.image4_url }}" alt="Thumbnail 4">
-                {% endif %}
-                {% if hotel.image5_url %}
-                <img src="{{ hotel.image5_url }}" alt="Thumbnail 5">
-                {% endif %}
-            </div>
+        
             {% endif %}
         </div>
         </a>
@@ -227,4 +306,8 @@
     </div>
     {% endfor %}
 </div>
+
+<script>
+    
+</script>
 {% endblock %}

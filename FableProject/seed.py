@@ -215,7 +215,7 @@ def create_users(num_users=10):
     print(f"{users_created} regular users created")
     return users_created
 
-def create_hotels(num_hotels=30):
+def create_hotels(num_hotels=200):
     """
     Create hotel entries with real image URLs
     """
@@ -295,7 +295,7 @@ def seed_database():
     print(f"Created {users_count} users")
     
     # Create hotels
-    hotels_count = create_hotels(30)
+    hotels_count = create_hotels(200)
     print(f"Created {hotels_count} hotels")
     
     print("Database seeding completed!")

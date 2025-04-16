@@ -64,6 +64,91 @@
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     }
 
+    .booking-history-section {
+        margin-top: 2.5rem;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .booking-history-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .booking-history-section h3:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+    }
+
+    .booking-history-section:hover h3:after {
+        width: 100px;
+    }
+
+    .booking-list {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .booking-item {
+        background-color: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .booking-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .booking-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .booking-header h4 {
+        margin: 0;
+        color: var(--text-color);
+    }
+
+    .booking-status {
+        background-color: #28a745;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .booking-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .booking-details div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-color);
+    }
+
+    .booking-details i {
+        color: var(--primary-color);
+    }
+
     .profile-header {
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: white;
@@ -419,12 +504,46 @@
                 </div>
                 <p>You're just 550 points away from a free night stay!</p>
             </div>
+            <div class="booking-history-section">
+                <h3><i class="fas fa-history"></i> Booking History</h3>
+                {% if bookings %}
+                <div class="booking-list">
+                    {% for booking in bookings %}
+                    <div class="booking-item">
+                        <div class="booking-header">
+                            <h4>{{ booking.hotel_name.hotel_name }}</h4>
+                            <span class="booking-status">Completed</span>
+                        </div>
+                        <div class="booking-details">
+                            <div>
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Check-in: {{ booking.check_in|date:"M d, Y" }}</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-calendar-times"></i>
+                                <span>Check-out: {{ booking.check_out|date:"M d, Y" }}</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-users"></i>
+                                <span>Guests: {{ booking.guests }}</span>
+                            </div>
+                            <div>
+                                <span>Total: ₹{{ booking.total_price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No bookings found.</p>
+                {% endif %}
+            </div>
+            
 
             <div class="action-buttons">
                 <a href="{% url 'edit_profile' %}" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#updateProfileModal">Update
                     Profile</a>
-                <a href="#" class="btn btn-secondary">Booking History</a>
                 <a href="{% url 'hotel_list' %}" class="btn btn-secondary">Back to Home</a>
                 <a href="{% url 'delete_profile' %}" class="btn btn-secondary"
                     onclick="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">Delete

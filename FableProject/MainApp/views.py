@@ -3,6 +3,10 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
+from .forms import FeedbackForm
+from .models import feedback
+from .models import ContactMessage
+
 
 def home(request):
     return render(request, 'index.html')
@@ -18,9 +22,22 @@ def setting(request):
 
 def help(request):
     return render(request, 'help.html')
+def feedback_view(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('thanks')
+    else:
+        form = FeedbackForm()
 
-def feedback(request):
-    return render(request, 'feedback.html')
+    feedbacks = feedback.objects.all()  # ✅ Correct usage of model
+    return render(request, 'feedback.html', {'form': form, 'feedbacks': feedbacks})
+# In views.py
+def thanks(request):
+    return render(request, 'thanks.html')
+      
+
 
 def about(request):
     return render(request, 'about.html')
@@ -38,7 +55,8 @@ def confirm(request):
     return render(request, 'confirm.html')
 
 def contact(request):
-    return render(request, 'contact.html')
+    messages = ContactMessage.objects.all()
+    return render(request, 'contact.html', {'messages': messages})
 
 def data(request):
     return render(request, 'data.html')
