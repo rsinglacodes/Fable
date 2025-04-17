@@ -85,9 +85,8 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-@login_required
+@login_required(login_url='login')
 def view_profile(request):
-    # Get the user's booking history
     bookings = Booking.objects.filter(user=request.user).order_by('-check_in')
     return render(request, 'profile.html', {
         'user': request.user,
