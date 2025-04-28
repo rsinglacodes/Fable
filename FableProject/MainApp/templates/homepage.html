@@ -247,8 +247,8 @@
 
     /* New search section styles */
     .search-section {
-      margin-top: 200px;
-      margin-bottom: 20px;
+      margin-top: 230px;
+      margin-bottom: 3px;
       display: flex;
       justify-content: center;
       width: 100%;
@@ -603,7 +603,21 @@
       align-items: center;
       gap: 32px;
     }
-
+    .category-bar {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center; /* Optional: vertical alignment */
+      margin: 20px 0;      /* Optional: spacing above and below */
+      gap: 0;              /* No extra gap, pure space-between */
+  }
+  .category-bar button {
+      padding: 8px 16px;   /* Optional: internal button spacing */
+      background: #f5f5f5; /* Optional: button styling */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+  
     .copyright {
       margin-top: 48px;
       text-align: center;
@@ -643,6 +657,7 @@
         height: 32px;
         width: auto;
       }
+      
 
       .navbar-search {
         display: none;

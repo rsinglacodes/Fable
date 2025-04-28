@@ -146,7 +146,7 @@
 
         .book-button {
             width: 100%;
-            padding: 1rem;
+            padding: 0.5rem;
             background: #1a4d4d;
             color: white;
             border: none;
@@ -154,6 +154,7 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
         .book-button:hover {
@@ -298,6 +299,7 @@
                         {% if user.is_authenticated %}
                             <button type="button" class="book-button" id="book-button">Book your room</button>
                         {% else %}
+                        <br>
                             <a href="{% url 'login' %}?next={% url 'confirm_booking' %}?room_id={{ room.hotel_name }}&check_in={{ check_in }}&check_out={{ check_out }}&guests={{ guests }}" class="book-button">Login to Book</a>
                         {% endif %}
                     </form>
@@ -347,7 +349,7 @@
             // Hide the success popup and redirect to amazing.html
             document.getElementById('success-popup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
-            window.location.href = "{% url 'amazing' %}";
+            window.location.href = "{% url 'hotel_list' %}";
         }
     </script>
 </body>

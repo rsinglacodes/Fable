@@ -438,6 +438,8 @@
 {% endblock %}
 
 {% block main_block %}
+
+
 <div class="container">
     <div class="profile-card">
         <div class="profile-header">
@@ -547,7 +549,7 @@
                     Profile</a>
                 <a href="{% url 'hotel_list' %}" class="btn btn-secondary">Back to Home</a>
                 <a href="{% url 'delete_profile' %}" class="btn btn-danger"
-                    onclick="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');" id="delete">Delete
+                    id="delete">Delete
                     Profile</a>
 
             </div>
@@ -556,16 +558,5 @@
 
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const deleteForm = document.querySelector('#deleteProfileModal form');
-        if (deleteForm) {
-            deleteForm.addEventListener('submit', function (e) {
-                if (!confirm('Are you absolutely sure you want to delete your profile? This action cannot be undone.')) {
-                    e.preventDefault();
-                }
-            });
-        }
-    });
-</script>
+
 {% endblock %}

@@ -4,9 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
 from .forms import FeedbackForm
-from .forms import ContactMessageForm
 from .models import feedback
-from .models import ContactMessage
 
 
 def home(request):
@@ -39,42 +37,16 @@ def feedback_view(request):
     return render(request, 'feedback.html', {'form': form})
 
 def contact(request):
-    print(f"Request method: {request.method}")
-    
-    if request.method == 'POST':
-        print(f"POST data: {request.POST}")
-        
-        # Directly create a ContactMessage instance
-        try:
-            name = request.POST.get('name')
-            email = request.POST.get('email')
-            phone = request.POST.get('phone', '')
-            subject = request.POST.get('subject')
-            message = request.POST.get('message')
+    # if request.method == 'POST':
+    #     form = ContactMessageForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()  # Save the data to the database
+    #         return messages.success(request, 'Thank you for your message! We will get back to you soon.')
             
-            # Validate required fields
-            if not name or not email or not message:
-                messages.error(request, "Please fill in all required fields.")
-                return render(request, 'contact.html')
-            
-            # Create and save the message
-            contact_msg = ContactMessage.objects.create(
-                name=name,
-                email=email,
-                phone=phone,
-                subject=subject,
-                message=message
-            )
-            
-            print(f"Successfully created message with ID: {contact_msg.id}")
-            messages.success(request, "Your message has been sent successfully!")
-            return redirect('contact')
-            
-        except Exception as e:
-            print(f"Error saving message: {str(e)}")
-            messages.error(request, f"Error: {str(e)}")
-            return render(request, 'contact.html')
-    
+    #     else:
+    #         messages.error(request, 'Please correct the errors below.')
+    # else:
+    #     form = ContactMessageForm()
     return render(request, 'contact.html')
 
 def thanks(request):

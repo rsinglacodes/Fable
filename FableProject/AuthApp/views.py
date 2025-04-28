@@ -109,8 +109,8 @@ def edit_profile(request):
 def delete_profile(request):
     if request.method == 'POST':
         user = request.user
-        logout(request)
-        user.delete()
+        user.delete()               # First, delete the user
+        logout(request)             # Then logout
         messages.success(request, "Your profile has been deleted.")
         return redirect('home')
     return render(request, 'delete_profile_confirm.html')

@@ -543,9 +543,11 @@
         opacity: 0;
       }
     }
+
     .messages {
       margin-bottom: 1rem;
     }
+
     .alert {
       padding: 0.75rem 1rem;
       border-radius: 6px;
@@ -553,27 +555,31 @@
       font-size: 1rem;
       font-weight: 500;
     }
+
     .alert-success {
       background: #e0f7e9;
       color: #007e33;
       border: 1px solid #b2dfdb;
     }
-    .alert-error, .alert-danger {
+
+    .alert-error,
+    .alert-danger {
       background: #ffeaea;
       color: #d32f2f;
       border: 1px solid #ffbdbd;
     }
+
     .alert-warning {
       background: #fff8e1;
       color: #ff9800;
       border: 1px solid #ffe0b2;
     }
+
     .alert-info {
       background: #e3f2fd;
       color: #1976d2;
       border: 1px solid #90caf9;
     }
-    
   </style>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -658,7 +664,7 @@
               <label for="password">Password</label>
               <i class="fas fa-lock"></i>
               <input type="password" name="password" id="password" class="form-control" placeholder="Create a password"
-                pattern="^(?=.\d)(?=.[a-zA-Z]).{8,}$"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
                 title="Must contain at least one number, one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long"
                 required />
               <ul class="password-requirements">
@@ -731,7 +737,7 @@
           </ul>
         </div>
 
-        
+
       </div>
 
       <div class="copyright">
@@ -741,6 +747,18 @@
   </footer>
 
   {% block content %} {% endblock %}
+
+  <script>
+    window.addEventListener('load', function () {
+        let reloadCount = sessionStorage.getItem('reloadCount') || 0;
+
+        if (reloadCount < 2) {
+            sessionStorage.setItem('reloadCount', Number(reloadCount) + 1);
+            window.location.reload();
+        }
+    });
+</script>
+
 </body>
 
 </html>
