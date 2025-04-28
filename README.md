@@ -1,3 +1,4 @@
+HEAD
 # Fable - Online Hotel Booking Application
 
 Fable is a modern, elegant online hotel booking web application developed using Django. It allows users to browse, book, and manage hotel stays seamlessly.
@@ -98,3 +99,6 @@ Developed by [Your Name]
 
 Enjoy booking hotels with Fable! ✨
 
+
+# Fable
+76970162b7aa6975572f889b389ec50d8363bdd0
