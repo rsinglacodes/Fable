@@ -223,7 +223,3 @@ Developed by \[Your Name]
 
 Enjoy booking smart with **Fable** ✨
 
-```
-
----
-
