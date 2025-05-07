@@ -218,9 +218,9 @@ python manage.py createsuperuser
 ## 👨‍💻 Author
 
 Developed by Team Fable:
-Ridhi Singla (https://github.com/rsinglacodes)
-Alisha Vashishth (https://github.com/alishavashishth)
-Himanshi (https://github.com/himanshi-kumar)
+* Ridhi Singla (https://github.com/rsinglacodes)
+* Alisha Vashishth (https://github.com/alishavashishth)
+* Himanshi (https://github.com/himanshi-kumar)
 
 ---
 
