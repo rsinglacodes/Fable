@@ -1,0 +1,340 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #008080;
+        --secondary-color: #e0f2f2;
+        --text-color: #333;
+        --light-color: #fff;
+        --border-radius: 8px;
+        --transition-time: 0.3s;
+        --heading-font: 'Playfair Display', serif;
+        --body-font: 'Poppins', sans-serif;
+        --label-font: 'Montserrat', sans-serif;
+        --special-font: 'Cormorant Garamond', serif;
+    }
+
+    .thank-you-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.2s;
+    }
+
+    .thank-you-header {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 25px;
+        text-align: center;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        position: relative;
+        overflow: hidden;
+        animation: slideDown 0.7s ease-out;
+    }
+
+    .thank-you-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+        transform: translateX(-100%);
+        animation: shine 4s infinite;
+    }
+
+    .thank-you-header h1 {
+        font-family: var(--heading-font);
+        font-weight: 600;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        font-size: 2.4rem;
+    }
+
+    .thank-you-header p {
+        font-family: var(--special-font);
+        font-style: italic;
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    .feedback-content {
+        background-color: var(--light-color);
+        padding: 30px;
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: slideUp 0.7s ease-out;
+        transform-origin: bottom;
+    }
+
+    .feedback-card {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.7s ease forwards;
+        animation-delay: 0.4s;
+        border-left: 5px solid var(--primary-color);
+    }
+
+    .feedback-result {
+        margin-bottom: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.7s ease forwards;
+        animation-delay: 0.6s;
+    }
+
+    .feedback-result h3 {
+        font-family: var(--heading-font);
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+    }
+
+    .feedback-result p {
+        font-family: var(--body-font);
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .feedback-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .feedback-detail {
+        background: var(--secondary-color);
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .feedback-detail:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .feedback-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 128, 128, 0.2);
+    }
+
+    .feedback-icon i {
+        color: white;
+        font-size: 28px;
+    }
+
+    .sentiment, .mood {
+        font-weight: 600;
+        color: var(--primary-color);
+        text-transform: capitalize;
+    }
+
+    .sentiment-description, .mood-description {
+        font-style: italic;
+        margin-top: 10px;
+        color: #666;
+        font-family: var(--special-font);
+        font-size: 1.1rem;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        transition: all 0.4s ease;
+        margin-top: 20px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3);
+        opacity: 0;
+        animation: fadeIn 0.5s ease forwards 1s;
+        font-family: var(--heading-font);
+        text-transform: uppercase;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+        transform: translateX(-100%);
+        transition: all 0.6s;
+        z-index: -1;
+    }
+
+    .btn:hover::before {
+        transform: translateX(100%);
+    }
+
+    .btn:hover {
+        background-color: #006666;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 102, 102, 0.4);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%); }
+        20% { transform: translateX(100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .thank-you-container {
+            margin: 20px;
+            width: 90%;
+        }
+        
+        .thank-you-header h1 {
+            font-size: 2rem;
+        }
+        
+        .feedback-content {
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<div class="thank-you-container">
+    <div class="thank-you-header">
+        <h1>Thank You for Your Feedback!</h1>
+        <p>We appreciate your input and will use it to improve our services</p>
+    </div>
+
+    <div class="feedback-content">
+        <div class="feedback-card">
+            <div class="feedback-details">
+                {% if sentiment %}
+                    <div class="feedback-detail">
+                        <strong>Sentiment:</strong> <span class="sentiment">{{ sentiment }}</span>
+                    </div>
+                {% endif %}
+                
+                {% if mood %}
+                    <div class="feedback-detail">
+                        <strong>Mood:</strong> <span class="mood">{{ mood }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="feedback-result">
+            {% if sentiment %}
+                <h3>About Your Sentiment</h3>
+                {% if sentiment == 'positive' %}
+                    <p>We're delighted to see your <span class="sentiment">positive</span> feedback! Your satisfaction is our priority, and we're thrilled that your experience with us was enjoyable. Your positive sentiment encourages us to maintain and improve our high standards of service.</p>
+                    <div class="sentiment-description">Your words reflect happiness and contentment with our services, which is exactly what we aim for with every customer interaction.</div>
+                {% elif sentiment == 'negative' %}
+                    <p>We notice your feedback has a <span class="sentiment">negative</span> sentiment. We sincerely apologize for any disappointment in your experience. Your feedback is incredibly valuable as it helps us identify areas where we need to improve. We take every concern seriously and will work to address the issues you've highlighted.</p>
+                    <div class="sentiment-description">We appreciate your honesty and will use this feedback as an opportunity for growth and improvement.</div>
+                {% else %}
+                    <p>Thank you for sharing your <span class="sentiment">neutral</span> feedback with us. We value your balanced perspective and will consider your comments carefully as we continue to refine our services.</p>
+                    <div class="sentiment-description">Your objective input helps us evaluate our offerings with a clear perspective.</div>
+                {% endif %}
+            {% endif %}
+        </div>
+        
+        {% if mood %}
+            <div class="feedback-result">
+                <h3>Understanding Your Mood</h3>
+                {% if mood == 'excited' %}
+                    <p>We can sense your <span class="mood">excitement</span> in your feedback! It's wonderful to know that your experience with us has generated such enthusiasm. Your energy is contagious, and we're equally excited about continuing to provide services that inspire this level of joy.</p>
+                    <div class="mood-description">Your enthusiasm motivates our team to continue creating memorable experiences for all our guests.</div>
+                {% elif mood == 'happy' %}
+                    <p>We're glad to see that you're <span class="mood">happy</span> with your experience. Your satisfaction brings us joy, and we're committed to maintaining the standard that has contributed to your positive mood.</p>
+                    <div class="mood-description">Your happiness is a reflection of our dedication to providing quality service to each and every guest.</div>
+                {% elif mood == 'annoyed' %}
+                    <p>We notice that you seem <span class="mood">annoyed</span> in your feedback. We genuinely apologize for any inconvenience or frustration you experienced. We're taking your feedback seriously and will work to address the issues that caused your dissatisfaction.</p>
+                    <div class="mood-description">We value your patience and hope to turn your experience around in the future.</div>
+                {% elif mood == 'anxious' %}
+                    <p>We sense some <span class="mood">anxiety</span> in your feedback. We want to assure you that your concerns are important to us. Our team is here to address any worries you might have and to provide the reassurance you need.</p>
+                    <div class="mood-description">We strive to create a comfortable and stress-free environment for all our guests.</div>
+                {% elif mood == 'sad' %}
+                    <p>We're sorry to see that your feedback reflects a <span class="mood">sad</span> mood. It's important to us that your experience with us is positive, and we're disappointed that this wasn't the case. We'd love the opportunity to make things right.</p>
+                    <div class="mood-description">Your emotional well-being matters to us, and we're committed to turning your experience around.</div>
+                {% elif mood == 'surprised' %}
+                    <p>We notice your feedback indicates you were <span class="mood">surprised</span>. We hope this was a pleasant surprise! Your reaction gives us valuable insight into how our services meet or exceed expectations.</p>
+                    <div class="mood-description">We aim to create memorable moments that positively surprise our guests.</div>
+                {% elif mood == 'calm' %}
+                    <p>We appreciate the <span class="mood">calm</span> tone of your feedback. Your composed assessment helps us evaluate our services objectively. Thank you for taking the time to share your thoughts with us in such a measured way.</p>
+                    <div class="mood-description">Your balanced perspective is invaluable as we continue to refine our offerings.</div>
+                {% else %}
+                    <p>Thank you for sharing your mood with us. Every emotional response helps us understand how our services affect our guests, and we value this insight tremendously.</p>
+                    <div class="mood-description">Your feedback helps us create better experiences for everyone.</div>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <a href="{% url 'home' %}" class="btn">Return to Home</a>
+    </div>
+</div>
+{% endblock %}
