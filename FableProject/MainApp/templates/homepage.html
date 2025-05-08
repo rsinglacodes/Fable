@@ -733,6 +733,7 @@
 
   <div class="navbar-menu">
     {% if user.is_authenticated %}
+    <a href="{% url 'cost_estimator' %} " class="nav-item">Trip Cost Estimator</a>
     <a href="{% url 'contact' %}" class="nav-item">Contact</a>
     <a href="{% url 'feedback' %}" class="nav-item">Feedback</a>
     <a href="{% url 'logout' %}" class="nav-item">Logout</a>
